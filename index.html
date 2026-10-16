@@ -18,7 +18,7 @@
       background: #192238;
     }
     h1 { color: #55e6a5; }
-    main { padding: 25px 20px; }
+    main { padding: 20px; }
     .card {
       background: #202b42;
       padding: 20px;
@@ -34,28 +34,80 @@
       border-radius: 10px;
       font-weight: bold;
       font-size: 16px;
+      margin: 8px;
     }
     p { line-height: 1.6; color: #d0d7e5; }
+    label {
+      display: block;
+      margin: 18px 0;
+      text-align: left;
+    }
+    input { transform: scale(1.3); margin-right: 10px; }
+    #ayarlar { display: none; }
   </style>
 </head>
 <body>
   <header>
     <h1>🛡️ ReklamKes</h1>
-    <p>İnternette daha rahat gezin.</p>
+    <p>Daha rahat gezin.</p>
   </header>
+
   <main>
-    <div class="card">
+    <div class="card" id="ana">
       <h2>Reklam Koruması</h2>
       <p>Koruma seçeneklerini buradan yönetebilirsin.</p>
-      <button onclick="alert('Reklam filtreleme özelliğini sonraki adımda ekleyeceğiz!')">
-        Koruma ayarları
-      </button>
+      <button onclick="ayarAc()">Koruma ayarları</button>
     </div>
+
+    <div class="card" id="ayarlar">
+      <h2>Koruma seçenekleri</h2>
+
+      <label>
+        <input type="checkbox" id="web">
+        İnternet reklamları filtresi
+      </label>
+
+      <label>
+        <input type="checkbox" id="oyun">
+        Oyun reklamları filtresi
+      </label>
+
+      <p id="bilgi">
+        Bu seçenekler henüz reklam engellemez.
+      </p>
+
+      <button onclick="kaydet()">Ayarları kaydet</button>
+      <button onclick="anaSayfa()">Geri dön</button>
+    </div>
+
     <div class="card">
       <h2>Hakkında</h2>
-      <p>ReklamKes projesinin ilk ekranı.</p>
+      <p>ReklamKes geliştirme aşamasında.</p>
     </div>
   </main>
+
+  <script>
+    function ayarAc() {
+      document.getElementById("ana").style.display = "none";
+      document.getElementById("ayarlar").style.display = "block";
+    }
+
+    function anaSayfa() {
+      document.getElementById("ayarlar").style.display = "none";
+      document.getElementById("ana").style.display = "block";
+    }
+
+    function kaydet() {
+      localStorage.setItem("web", document.getElementById("web").checked);
+      localStorage.setItem("oyun", document.getElementById("oyun").checked);
+      document.getElementById("bilgi").textContent =
+        "Tercihlerin bu tarayıcıda kaydedildi. Reklam engelleme henüz etkin değil.";
+    }
+
+    document.getElementById("web").checked =
+      localStorage.getItem("web") === "true";
+    document.getElementById("oyun").checked =
+      localStorage.getItem("oyun") === "true";
+  </script>
 </body>
-  </html>
-  
+</html>
